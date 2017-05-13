@@ -90,26 +90,25 @@ function renderVisibleAmount($amount, $pd_options, $indent) {
   if (is_array($amounts)) {
       $paypal_btn .=  $indent. '<div class="paypal-donations__levels">'.PHP_EOL;
       foreach ($amounts as $amt) {
-          trim($amt);
+          $amt = trim($amt);
           if (is_numeric($amt)) {
               $label = $amt;
               // TODO: define full set of mappings for all currencies
               if (isset($pd_options['currency_code']) && $pd_options['currency_code'] == 'USD') {
                   $label = '$' . $amt;
               }
-              $paypal_btn .=  $indent.'<span class="paypal-donations__level"><input type="radio" name="amount" value="' . apply_filters( 'paypal_donations_amount', $amt ) . '" id="paypal-donations__level--' . apply_filters( 'paypal_donations_amount', $amt ) . '"/> <label for="paypal-donations__level--' . apply_filters( 'paypal_donations_amount', $amt ) . '">'.$label.'</label></span>'.PHP_EOL;
+              $paypal_btn .=  $indent.$indent.'<span class="paypal-donations__level"><input type="radio" name="amount" value="' . apply_filters( 'paypal_donations_amount', $amt ) . '" id="paypal-donations__level--' . apply_filters( 'paypal_donations_amount', $amt ) . '"/> <label for="paypal-donations__level--' . apply_filters( 'paypal_donations_amount', $amt ) . '">'.$label.'</label></span>'.PHP_EOL;
           }
           else {
               wp_die('Error! Donation amount must be a numeric value.');
           }
       }
   }
-
   // show one amount input amount
   else {
-      $paypal_btn .=  $indent.'<span class="paypal-donations__level"><input type="radio" name="amount" value="' . apply_filters( 'paypal_donations_amount', $amount ) . '" /> <label>'.$amount.'</label></span>'.PHP_EOL;
-    }
-    $paypal_btn .=  $indent. '</div>'.PHP_EOL;
+      $paypal_btn .=  $indent.$indent.'<span class="paypal-donations__level"><input type="radio" name="amount" value="' . apply_filters( 'paypal_donations_amount', $amount ) . '" /> <label>'.$amount.'</label></span>'.PHP_EOL;
+  }
+  $paypal_btn .=  $indent. '</div>'.PHP_EOL;
 
   return $paypal_btn;
 }
